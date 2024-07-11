@@ -20,3 +20,7 @@ jobs:
         uses: github/codeql-action/autobuild@v3
       - name: 🚀 Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
