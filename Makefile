@@ -1,7 +1,7 @@
 CC ?= gcc
 LD ?= ld
 
-CFLAGS ?= -std=c89 -Wall -Wextra -Werror -O3
+CFLAGS ?= -std=c89 -Wall -Wextra -Werror -O3 -Isrc -fno-strict-aliasing -fno-wrapv
 LDFLAGS ?=
 
 BIN_DIR := bin
@@ -12,8 +12,8 @@ DESTDIR ?= /usr/local/bin
 TARGET_NAME := zircon
 TARGET := $(BIN_DIR)/$(TARGET_NAME)
 
-SRC := $(foreach x, $(SRC_DIR), $(wildcard $(addprefix $(x)/*,.c*)))
-OBJ := $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(notdir $(basename $(SRC)))))
+SRC := $(shell find src -name '*.c' -type f)
+OBJ := $(SRC:%.c=$(OBJ_DIR)/%.o)
 
 .PHONY: all
 all: $(TARGET)
@@ -23,7 +23,7 @@ $(TARGET): $(OBJ)
 	@printf "  LD $(notdir $@)\n"
 	@$(CC) $(LDFLAGS) $(OBJ) -o $@
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+$(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(@D)
 	@printf "  CC $<\n"
 	@$(CC) $(CFLAGS) -c $< -o $@
@@ -38,7 +38,7 @@ format:
 
 .PHONY: lint
 lint:
-	@clang-tidy -fix --fix-errors --fix-notes $(shell find src -name "*.c" -o -name "*.h") -- $(CFLAGS)
+	@clang-tidy $(shell find src -name "*.c" -o -name "*.h") -- $(CFLAGS)
 
 .PHONY: clean
 clean:
