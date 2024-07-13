@@ -12,7 +12,16 @@ DESTDIR ?= /usr/local/bin
 TARGET_NAME := zircon
 TARGET := $(BIN_DIR)/$(TARGET_NAME)
 
-SRC := $(shell find src -name '*.c' -type f)
+rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
+
+SRC := $(call rwildcard,src,*.c)
+SRC := $(filter-out src/system%,$(SRC))
+ifeq ($(OS),Windows_NT)
+SRC += $(call rwildcard,src/system/windows,*.c)
+else
+SRC += $(call rwildcard,src/system/linux,*.c)
+endif
+
 OBJ := $(SRC:%.c=$(OBJ_DIR)/%.o)
 
 .PHONY: all
@@ -39,6 +48,12 @@ format:
 .PHONY: lint
 lint:
 	@clang-tidy $(shell find src -name "*.c" -o -name "*.h") -- $(CFLAGS)
+
+.PHONY: iwyu
+iwyu:
+	@for file in $(shell find src -name "*.c"); do \
+		include-what-you-use $(CFLAGS) $$file; \
+	done
 
 .PHONY: clean
 clean:
