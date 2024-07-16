@@ -42,6 +42,11 @@ struct irc_server_info *config_get_server_info(void)
   return &zircon_config.server;
 }
 
+char *config_get_nickname()
+{
+  return zircon_config.nickname;
+}
+
 char *config_get_username()
 {
   return zircon_config.username;

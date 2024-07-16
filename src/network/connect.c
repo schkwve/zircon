@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
+#include <sys/errno.h>
 #include <sys/socket.h>
 #include <unistd.h>
 
@@ -56,4 +57,37 @@ void close_server_connection(void)
     free(server_info->address);
     server_info->address = NULL;
   }
+}
+
+int send_data_to_server(const char *buffer)
+{
+  struct irc_server_info *server_info = config_get_server_info();
+  size_t size = strlen(buffer);
+  size_t bytes_written = 0;
+  int ret = 0;
+
+  do {
+    ret = write(server_info->sockfd, buffer, size - bytes_written);
+    if (ret == -1) {
+      fprintf(stderr, "failed to write %lu bytes: %s\n", size - bytes_written,
+              strerror(errno));
+      return bytes_written;
+    }
+    bytes_written += ret;
+    buffer += bytes_written;
+  } while (bytes_written < size);
+
+  return bytes_written;
+}
+
+int recv_data_from_server(char **buffer, size_t size)
+{
+  struct irc_server_info *server_info = config_get_server_info();
+
+  if (size < 1) {
+    return -1;
+  }
+
+  /* we assume the buffer is at least `size` bytes big */
+  return read(server_info->sockfd, *buffer, size);
 }

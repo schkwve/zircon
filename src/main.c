@@ -6,7 +6,8 @@ int main(int argc, char **argv)
   (void)argc;
   (void)argv;
 
-  const char *address = "0.0.0.0";
+  /* chat.freenode.net */
+  const char *address = "207.148.28.126";
   const int port = 6667;
 
   load_config();

@@ -16,6 +16,7 @@ int load_config();
 
 struct irc_server_info *config_get_server_info(void);
 
+char *config_get_nickname();
 char *config_get_username();
 char *config_get_fullname();
 
