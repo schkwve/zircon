@@ -1,5 +1,6 @@
 #include <config.h>
 #include <irc/connect.h>
+#include <utils/zerr.h>
 
 int main(int argc, char **argv)
 {
@@ -11,6 +12,11 @@ int main(int argc, char **argv)
   const int port = 6667;
 
   load_config();
+
+  zinfo("Testing please work! %d %s\n", 5, "hello");
+  zwarn("Testing please work! %d %s\n", 5, "hello");
+  zerr("Testing please work! %d %s\n", 5, "hello");
+  zfatal(1, "Testing please work! %d %s\n", 5, "hello");
 
   /* assume we want to connect to localhost @ 6667 */
   irc_connect_to(address, port);

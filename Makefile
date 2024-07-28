@@ -58,3 +58,7 @@ iwyu:
 .PHONY: clean
 clean:
 	@rm -rf $(BIN_DIR) $(BUILD_DIR) $(OBJ_DIR)
+
+.PHONY: run
+run: $(TARGET)
+	@$(TARGET)
