@@ -41,19 +41,22 @@ $(OBJ_DIR)/%.o: %.c
 install: $(TARGET)
 	@install -m 755 $(TARGET) $(DESTDIR)
 
-.PHONY: format
-format:
-	@clang-format -i $(shell find src -name "*.c" -o -name "*.h")
+.PHONY: run-scripts
 
-.PHONY: lint
-lint:
-	@clang-tidy $(shell find src -name "*.c" -o -name "*.h") -- $(CFLAGS)
-
-.PHONY: iwyu
-iwyu:
-	@for file in $(shell find src -name "*.c"); do \
-		include-what-you-use $(CFLAGS) $$file; \
+run-scripts:
+	@echo "Making all scripts executable..."
+	@chmod +x scripts/*.sh
+	@echo "Executing all scripts except scripts/cloc.sh..."
+	@for script in scripts/*.sh; do \
+		if [ "$$script" != "scripts/cloc.sh" ]; then \
+			echo "Executing $$script..."; \
+			$$script; \
+		fi \
 	done
+	@echo "Clearing the screen..."
+	@clear
+	@echo "Executing scripts/cloc.sh..."
+	@scripts/cloc.sh
 
 .PHONY: clean
 clean:
