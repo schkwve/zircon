@@ -1,5 +1,7 @@
 #include <stddef.h>
 #include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <strings.h>
 
@@ -49,13 +51,10 @@ int irc_send(const char *buffer)
 
 int irc_recv(char **buffer, size_t size)
 {
-  size_t read_bytes;
-
   if (size < 1) {
     return -1;
   }
 
   bzero(*buffer, sizeof(buffer));
-  read_bytes = recv_data_from_server(buffer, 1);
-  return read_bytes;
+  return recv_data_from_server(buffer, size);
 }
