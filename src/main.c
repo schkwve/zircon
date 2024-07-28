@@ -4,10 +4,14 @@
 #include <zircon.h>
 #include <utils/kvpairs.h>
 
+void die(void);
+
 int main(int argc, char **argv)
 {
   UNUSED(argc);
   UNUSED(argv);
+
+  atexit(die);
 
   /* chat.freenode.net */
   const char *address = "207.148.28.126";
@@ -33,4 +37,11 @@ int main(int argc, char **argv)
   zinfo("Done\n");
 
   return 0;
+}
+
+void die(void)
+{
+  irc_disconnect();
+
+  free_config();
 }

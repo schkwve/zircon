@@ -20,4 +20,6 @@ char *config_get_nickname();
 char *config_get_username();
 char *config_get_fullname();
 
+void free_config();
+
 #endif /* _CONFIG_H */
