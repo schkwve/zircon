@@ -45,6 +45,7 @@ void zerr(const char *fmt, ...) {
 
     /* Use vprintf to print the valist */
     vprintf(fmt, args);
+    perror(NULL);
 
     /* Cleanup */
     va_end(args);
@@ -60,6 +61,7 @@ void zfatal(int err_code, const char *fmt, ...) {
 
     /* Use vprintf to print the valist */
     vprintf(fmt, args);
+    perror(NULL);
     printf("%s", ZERR_COLOR_RESET);
 
     /* Cleanup */

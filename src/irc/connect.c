@@ -7,6 +7,7 @@
 #include <irc/commands.h>
 #include <irc/connect.h>
 #include <network/connect.h>
+#include <utils/zerr.h>
 
 /* *** *** *** ** *** *** */
 /*  IMPLEMENTATION NOTES  */
@@ -41,6 +42,7 @@ int irc_send(const char *buffer)
 {
   size_t size = strlen(buffer);
   if (size < 1) {
+    zerr("The buffer cant be empty\n");
     return -1;
   }
 
@@ -52,6 +54,7 @@ int irc_recv(char **buffer, size_t size)
   size_t read_bytes;
 
   if (size < 1) {
+    zerr("The read size cant be 0!\n");
     return -1;
   }
 
