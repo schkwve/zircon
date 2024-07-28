@@ -1,9 +1,10 @@
 #include <utils/kvpairs.h>
+#include <utils/zerr.h>
 
 int read_key_value_file(const char *filename, KeyValueArray *kvArray) {
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
-        perror("Error opening file");
+        zerr("Cannot open input file: \n");
         return -1;
     }
 
@@ -23,8 +24,8 @@ int read_key_value_file(const char *filename, KeyValueArray *kvArray) {
                 *newline = '\0';
             }
 
-            strncpy(kvArray->pairs[kvArray->count].key, key, MAX_KEY_LEN);
-            strncpy(kvArray->pairs[kvArray->count].value, value, MAX_VALUE_LEN);
+            strncpy(kvArray->pairs[kvArray->count].key, key, 512);
+            strncpy(kvArray->pairs[kvArray->count].value, value, 512);
             kvArray->pairs[kvArray->count].key[MAX_KEY_LEN - 1] = '\0';
             kvArray->pairs[kvArray->count].value[MAX_VALUE_LEN - 1] = '\0';
             kvArray->count++;
