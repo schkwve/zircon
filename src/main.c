@@ -1,11 +1,12 @@
 #include <config.h>
 #include <irc/connect.h>
 #include <utils/zerr.h>
+#include <zircon.h>
 
 int main(int argc, char **argv)
 {
-  (void)argc;
-  (void)argv;
+  UNUSED(argc);
+  UNUSED(argv);
 
   /* chat.freenode.net */
   const char *address = "207.148.28.126";
