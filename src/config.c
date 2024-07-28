@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 #include <config.h>
 #include <system/uname.h>
@@ -19,6 +20,10 @@ int load_config()
 
   /* make nickname and username identical by default */
   zircon_config.nickname = z_strdup(zircon_config.username);
+
+  printf("Full name: %s\n", zircon_config.fullname);
+  printf("Username: %s\n", zircon_config.username);
+  printf("Nickname: %s\n", zircon_config.nickname);
 
   return 0;
 }
