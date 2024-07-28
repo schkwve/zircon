@@ -19,7 +19,7 @@ SRC := $(filter-out src/system%,$(SRC))
 ifeq ($(OS),Windows_NT)
 SRC += $(call rwildcard,src/system/windows,*.c)
 else
-SRC += $(call rwildcard,src/system/linux,*.c)
+SRC += $(call rwildcard,src/system/unix,*.c)
 endif
 
 OBJ := $(SRC:%.c=$(OBJ_DIR)/%.o)
