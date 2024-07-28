@@ -1,6 +1,7 @@
 #include <stdlib.h>
-#include <string.h>
 #include <stdio.h>
+#include <string.h>
+#include <ctype.h>
 
 #include <config.h>
 #include <system/uname.h>
@@ -28,10 +29,21 @@ int load_config()
     zerr("Coulnt read config file: ");
     return -1;
   }
+
+  
+  
   
   char* name = get_value(&kvArray, "name");
   char *username = get_value(&kvArray, "username");
   char *nickname =get_value(&kvArray, "nickname");
+
+  if (validate_nickname(nickname) == 1) {
+    zerr("Invalid nickname!");
+  } else if (validate_nickname(nickname) == -1) {
+    zwarn("Nickname contains a a dot which is not recommended");
+  } else if (validate_nickname(nickname) == 0) {
+    zsucc("Nickname is valid");
+  }
 
   zinfo("Full name: %s", name);
   zinfo("Username: %s", username);
@@ -73,4 +85,25 @@ char *config_get_username()
 char *config_get_fullname()
 {
   return zircon_config.fullname;
+}
+
+/* 1=invalid -1=dot 0=good */
+int validate_nickname(const char *nickname) {
+   if (nickname[0] == '\0' || nickname[0] == '$' || nickname[0] == ':' || nickname[0] == '#' || nickname[0] == '&'
+    || nickname[0] == '%' || nickname[0] == '+' || nickname[0] == '@' || nickname[0] == '~') {
+      return 1;
+    } else {
+      if (strstr(nickname, " ") != NULL || strstr(nickname, ",") != NULL || strstr(nickname, "*") != NULL ||
+        strstr(nickname, "?") != NULL || strstr(nickname, "!") != NULL || strstr(nickname, "@") != NULL) {
+      return 1;
+      } else {
+        if (strstr(nickname, ".") != NULL) {
+          return -1;
+        } else {
+          return 0;
+        }
+      }
+    }
+    
+   return 0;
 }

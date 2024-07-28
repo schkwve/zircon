@@ -73,3 +73,19 @@ void zfatal(int err_code, const char *fmt, ...) {
     
     exit(1);
 }
+
+void zsucc(const char *fmt, ...) {
+    va_list args;
+
+    printf("%s%s[SUCCESS]:%s ", ZERR_COLOR_GREEN, ZERR_STYLE_BOLD, ZERR_COLOR_RESET);
+
+    /* Init the va list */
+    va_start(args, fmt);
+
+    /* Use vprintf to print the valist */
+    vprintf(fmt, args);
+    printf("\n");
+
+    /* Cleanup */
+    va_end(args);
+}

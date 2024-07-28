@@ -3,6 +3,7 @@
 #include <utils/zerr.h>
 #include <zircon.h>
 #include <utils/kvpairs.h>
+#include <utils/str.h>
 
 void die(void);
 
@@ -21,8 +22,6 @@ int main(int argc, char **argv)
 
   load_config();
 
-  
-
   /* assume we want to connect to localhost @ 6667 */
   irc_connect_to(address, port);
   irc_disconnect();
@@ -36,6 +35,7 @@ int main(int argc, char **argv)
 void die(void)
 {
   irc_disconnect();
-
   free_config();
+
+  zinfo("Exited");
 }
