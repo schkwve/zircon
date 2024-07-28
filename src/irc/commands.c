@@ -4,6 +4,7 @@
 #include <irc/commands.h>
 #include <irc/connect.h>
 #include <zircon.h>
+#include <utils/zerr.h>
 
 #define MESSAGE_MAXLEN 512
 
@@ -11,6 +12,7 @@
 void irc_nick(const char *nickname)
 {
   if (strlen(nickname) < 1) {
+    zerr("Nickname cannot be empty\n");
     return;
   }
 

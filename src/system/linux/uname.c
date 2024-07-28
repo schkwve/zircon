@@ -5,6 +5,7 @@
 #include <system/uname.h>
 #include <utils/str.h>
 #include <zircon.h>
+#include <utils/zerr.h>
 
 int system_get_username(char **username, char **fullname)
 {
@@ -16,7 +17,7 @@ int system_get_username(char **username, char **fullname)
   struct passwd *pwd = getpwuid(getuid());
 
   if (pwd == NULL) {
-    /* TODO: Proper error handling */
+    zerr("getpwuid returned NULL!\n");
     return 1;
   }
 
