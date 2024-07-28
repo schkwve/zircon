@@ -12,15 +12,13 @@
 #include <config.h>
 #include <network/connect.h>
 #include <network/server_info.h>
+#include <utils/str.h>
 
 void connect_server(const char *server_address, uint16_t server_port)
 {
   struct sockaddr_in servaddr;
   struct irc_server_info *server_info = config_get_server_info();
   int sockfd;
-  size_t saddr_length;
-
-  saddr_length = strlen(server_address);
 
   sockfd = socket(AF_INET, SOCK_STREAM, 0);
   if (sockfd == -1) {
@@ -42,8 +40,7 @@ void connect_server(const char *server_address, uint16_t server_port)
     exit(EXIT_FAILURE);
   }
 
-  server_info->address = (char *)malloc(saddr_length);
-  memcpy(server_info->address, server_address, saddr_length);
+  server_info->address = z_strdup(server_address);
 
   server_info->port = server_port;
   server_info->sockfd = sockfd;
