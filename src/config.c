@@ -6,26 +6,36 @@
 #include <system/uname.h>
 #include <utils/str.h>
 #include <utils/zerr.h>
+#include <utils/kvpairs.h>
 
 struct zircon_config zircon_config;
 
 int load_config()
 {
-  /* TODO: Open a config file and try to read it. */
-
   /* get username and full name */
   if (system_get_username(&zircon_config.username, &zircon_config.fullname) !=
       0) {
-    zerr("Failed to get username and full name\n");
+    zerr("Failed to get username and full name");
     return -1;
   }
 
   /* make nickname and username identical by default */
   zircon_config.nickname = z_strdup(zircon_config.username);
 
-  zinfo("Full name: %s\n", zircon_config.fullname);
-  zinfo("Username: %s\n", zircon_config.username);
-  zinfo("Nickname: %s\n", zircon_config.nickname);
+  KeyValueArray kvArray;
+
+  if (read_key_value_file("zircon.conf", &kvArray, &zircon_config) != 0) {
+    zerr("Coulnt read config file: ");
+    return -1;
+  }
+  
+  char* name = get_value(&kvArray, "name");
+  char *username = get_value(&kvArray, "username");
+  char *nickname =get_value(&kvArray, "nickname");
+
+  zinfo("Full name: %s", name);
+  zinfo("Username: %s", username);
+  zinfo("Nickname: %s", nickname);
 
   return 0;
 }

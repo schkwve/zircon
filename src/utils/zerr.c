@@ -15,6 +15,7 @@ void zinfo(const char *fmt, ...) {
 
     /* Use vprintf to print the valist */
     vprintf(fmt, args);
+    printf("\n");
 
     /* Cleanup */
     va_end(args);
@@ -30,6 +31,7 @@ void zwarn(const char *fmt, ...) {
 
     /* Use vprintf to print the valist */
     vprintf(fmt, args);
+    printf("\n");
 
     /* Cleanup */
     va_end(args);
@@ -46,6 +48,7 @@ void zerr(const char *fmt, ...) {
     /* Use vprintf to print the valist */
     vprintf(fmt, args);
     perror(NULL);
+    printf("\n");
 
     /* Cleanup */
     va_end(args);
@@ -63,6 +66,7 @@ void zfatal(int err_code, const char *fmt, ...) {
     vprintf(fmt, args);
     perror(NULL);
     printf("%s", ZERR_COLOR_RESET);
+    printf("\n");
 
     /* Cleanup */
     va_end(args);

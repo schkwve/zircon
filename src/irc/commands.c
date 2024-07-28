@@ -12,7 +12,7 @@
 void irc_nick(const char *nickname)
 {
   if (strlen(nickname) < 1) {
-    zerr("Nickname cannot be empty\n");
+    zerr("Nickname cannot be empty");
     return;
   }
 

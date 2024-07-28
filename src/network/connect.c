@@ -23,7 +23,7 @@ void connect_server(const char *server_address, uint16_t server_port)
 
   sockfd = socket(AF_INET, SOCK_STREAM, 0);
   if (sockfd == -1) {
-    zfatal(-1, "Socket creation failed: \n");
+    zfatal(-1, "Socket creation failed: ");
   }
 
   bzero(&servaddr, sizeof(servaddr));
@@ -34,7 +34,7 @@ void connect_server(const char *server_address, uint16_t server_port)
 
   if (connect(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr)) != 0) {
     /* TODO: Proper error handling and exit */
-    zfatal(-1, "Connection with the server failed: \n");
+    zfatal(-1, "Connection with the server failed: ");
   }
 
   server_info->address = z_strdup(server_address);
@@ -68,7 +68,7 @@ int send_data_to_server(const char *buffer)
   do {
     ret = write(server_info->sockfd, buffer, size - bytes_written);
     if (ret == -1) {
-      zerr("%lu bytes could not be written to the server: \n", size - bytes_written);
+      zerr("%lu bytes could not be written to the server: ", size - bytes_written);
       return bytes_written;
     }
     bytes_written += ret;

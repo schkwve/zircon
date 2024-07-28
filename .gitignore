@@ -1,5 +1,7 @@
 build/
 bin/
 
+.fuse*
+
 .DS_Store
 .vscode/
