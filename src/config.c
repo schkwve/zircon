@@ -8,6 +8,7 @@ struct zircon_config zircon_config;
 
 int load_config()
 {
+  size_t username_len;
   /* TODO: Open a config file and try to read it. */
 
   /* get username and full name */
@@ -16,8 +17,11 @@ int load_config()
     return -1;
   }
 
+  username_len = strlen(zircon_config.username);
+
   /* make nickname and username identical by default */
-  zircon_config.nickname = strdup(zircon_config.username);
+  zircon_config.nickname = (char *)malloc(username_len);
+  memcpy(zircon_config.nickname, zircon_config.username, username_len);
 
   return 0;
 }

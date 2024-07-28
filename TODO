@@ -6,6 +6,7 @@
 
 - Parsing messages from server
 - Client identification (`irc_connect_to()` in `src/irc/connect.c`)
+- Compatibility negotiation
 
 ## Networking
 
