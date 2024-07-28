@@ -82,6 +82,7 @@ Reach out to the maintainer at one of the following places:
 
 First off, thanks for taking the time to contribute! Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make will benefit everybody else and are **greatly appreciated**.
 
+For a place to start, take a look at [GitHub issues](https://github.com/schkwve/zircon/issues?q=is%3Aopen+is%3Aissue+label%3Abug) to fix, or our [TODO list](TODO).
 
 Please read [our contribution guidelines](docs/CONTRIBUTING.md), and thank you for being involved!
 
