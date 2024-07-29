@@ -1,5 +1,13 @@
 ---
-BasedOnStyle: Chromium
-BreakBeforeBraces: Mozilla
-PointerAlignment: Right
-...
+BasedOnStyle: Mozilla
+AlignOperands: 'true'
+AllowAllArgumentsOnNextLine: 'true'
+AllowShortBlocksOnASingleLine: 'true'
+AllowShortCaseLabelsOnASingleLine: 'true'
+AllowShortFunctionsOnASingleLine: All
+AllowShortIfStatementsOnASingleLine: Always
+AllowShortLambdasOnASingleLine: All
+AllowShortLoopsOnASingleLine: 'true'
+IncludeBlocks: Merge
+TabWidth: '2'
+UseTab: Always

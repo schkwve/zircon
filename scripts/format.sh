@@ -1,28 +1,15 @@
 #!/bin/bash
 
-# Formats the code to the clang format type
-
-# Define the path to the .clang-format file
-config_file=".clang-format"
-
-# Check if the .clang-format file exists
-if [ ! -f "$config_file" ]; then
-  echo "Error: .clang-format configuration file not found in the parent directory."
-  exit 1
+# Check if clang-format is installed
+if ! command -v clang-format &> /dev/null; then
+    echo "clang-format could not be found, please install it first."
+    exit 1
 fi
 
-# Find all .c and .h files in the src directory
-files=$(find src -type f \( -name "*.c" -o -name "*.h" \))
+# Directory to scan
+SRC_DIR="src"
 
-# Check if any files were found
-if [ -z "$files" ]; then
-  echo "No .c or .h files found in the src directory."
-  exit 0
-fi
-
-# Apply clang-format to each file using the specified configuration file
-for file in $files; do
-  clang-format -i -style=file -fallback-style=none -config="$config_file" "$file"
-done
+# Find and format all .h and .c files in the src/ directory and subdirectories
+find "$SRC_DIR" -type f \( -name "*.h" -o -name "*.c" \) -exec clang-format -i {} \;
 
 echo "Formatting complete."

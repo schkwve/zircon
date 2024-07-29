@@ -11,12 +11,19 @@
 #define ZERR_COLOR_RESET "\x1b[0m"
 #define ZERR_STYLE_BOLD "\x1b[1m"
 
-void zinfo(const char *fmt, ...);
-void zwarn(const char *fmt, ...);
-void zerr(const char *fmt, ...);
-void zfatal(int err_code, const char *fmt, ...);
-void zsucc(const char *fmt, ...);
-void zircmsg(const char *fmt, ...);
-void zircwarn(const char *fmt, ...);
+void
+zinfo(const char* fmt, ...);
+void
+zwarn(const char* fmt, ...);
+void
+zerr(const char* fmt, ...);
+void
+zfatal(int err_code, const char* fmt, ...);
+void
+zsucc(const char* fmt, ...);
+void
+zircmsg(const char* fmt, ...);
+void
+zircwarn(const char* fmt, ...);
 
 #endif /* _UTILS_ZERR_H */

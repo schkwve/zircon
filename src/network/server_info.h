@@ -6,12 +6,12 @@
 
 struct irc_server_info
 {
-  char *address;
-  uint16_t port;
+	char* address;
+	uint16_t port;
 
-  int sockfd;
-  int connfd;
-  bool is_connected;
+	int sockfd;
+	int connfd;
+	bool is_connected;
 };
 
 #endif /* _NETWORK_SERVER_INFO_H */
