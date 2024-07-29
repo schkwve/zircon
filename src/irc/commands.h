@@ -14,7 +14,7 @@ irc_user(const char* username, const char* fullname);
 
 enum
 {
-	IRC_VER302 = 302,
+  IRC_VER302 = 302,
 };
 
 void

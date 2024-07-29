@@ -2,13 +2,14 @@
 #define _CONFIG_H
 
 #include <network/server_info.h>
+
 struct zircon_config
 {
-	struct irc_server_info server;
+  struct irc_server_info server;
 
-	char* nickname;
-	char* username;
-	char* fullname;
+  char* nickname;
+  char* username;
+  char* fullname;
 };
 
 int
