@@ -1,6 +1,8 @@
 #ifndef _IRC_COMMANDS_H
 #define _IRC_COMMANDS_H
 
+#include <stddef.h>
+
 /** NICK **/
 
 void
