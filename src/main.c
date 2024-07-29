@@ -1,41 +1,59 @@
 #include <config.h>
 #include <irc/connect.h>
+#include <irc/negotiation.h>
+#include <utils/kvpairs.h>
+#include <utils/signals.h>
+#include <utils/str.h>
 #include <utils/zerr.h>
 #include <zircon.h>
-#include <utils/kvpairs.h>
 
-void die(void);
+static int exit_code = 0;
 
-int main(int argc, char **argv)
+void
+die(void);
+
+int
+main(int argc, char** argv)
 {
-  UNUSED(argc);
-  UNUSED(argv);
 
-  atexit(die);
+	UNUSED(argc);
+	UNUSED(argv);
+	UNUSED(exit_code);
 
-  /* chat.freenode.net */
-  const char *address = "207.148.28.126";
-  const int port = 6667;
+	register_handlers();
 
-  zinfo("Connecting to %s:%d", address, port);
+	if (atexit(die) != 0) {
+		zerr("Failed to register exit handler");
+		return 1;
+	}
 
-  load_config();
+	/* irc.libera.chat */
+	const char* address = "94.125.182.252";
+	const int port = 6667;
 
-  
+	zinfo("Connecting to %s:%d", address, port);
 
-  /* assume we want to connect to localhost @ 6667 */
-  irc_connect_to(address, port);
-  irc_disconnect();
+	load_config();
 
-  zinfo("Disconnected from %s:%d", address, port);
-  zinfo("Done");
+	/* everything must be loaded from here on */
 
-  return 0;
+	/* assume we want to connect to localhost @ 6667 */
+	irc_connect_to(address, port);
+
+	irc_disconnect();
+
+	zinfo("Disconnected from %s:%d", address, port);
+	zinfo("Done");
+
+	return 0;
 }
 
-void die(void)
+void
+die(void)
 {
-  irc_disconnect();
+	irc_disconnect();
 
-  free_config();
+	free_config();
+
+	zsucc("Freed memory and disconnected from server");
 }

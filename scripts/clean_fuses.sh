@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Dear Maintainers please run this script before committing if there are any open FUSEs
+# Used to delete open Filesystems in Userspace (FUSE) files
 
 # Define the path where to search for .fuse_hidden* files
 SEARCH_PATH="$PWD"
