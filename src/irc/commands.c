@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <utils/zerr.h>
+#include <stdlib.h>
 
 #define MESSAGE_MAXLEN 512
 
@@ -11,7 +12,7 @@ void
 irc_nick(const char* nickname)
 {
   if (strlen(nickname) < 1) {
-    zerr("Nickname cannot be empty");
+    zerr(0, "Nickname cannot be empty");
     return;
   }
 
@@ -65,7 +66,7 @@ irc_capend(void)
 void
 irc_join_channel(const char* channel_name)
 {
-  char* command = NULL;
+  char* command = malloc(64 * sizeof(char));
   sprintf(command, "JOIN %s\r\n", channel_name); /* TODO: fix sigsegv */
   irc_send(command);
 }

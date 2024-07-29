@@ -9,13 +9,11 @@
 
 struct zircon_config zircon_config;
 
-int
-load_config()
+int load_config()
 {
   /* get username and full name */
-  if (system_get_username(&zircon_config.username, &zircon_config.fullname) !=
-      0) {
-    zerr("Failed to get username and full name");
+  if (system_get_username(&zircon_config.username, &zircon_config.fullname) != 0) {
+    zerr(0, "Failed to get username and full name");
     return -1;
   }
 
@@ -23,9 +21,8 @@ load_config()
   zircon_config.nickname = z_strdup(zircon_config.username);
 
   KeyValueArray kvArray;
-
   if (read_key_value_file("zircon.conf", &kvArray, &zircon_config) != 0) {
-    zerr("Coulnt read config file: ");
+    zerr(1, "Couldn't read config file: ");
     return -1;
   }
 
@@ -34,38 +31,33 @@ load_config()
   char* nickname = get_value(&kvArray, "nickname");
 
   if (validate_nickname(nickname) == 1) {
-    zerr("Invalid nickname!");
+    zerr(0, "Invalid nickname!");
   } else if (validate_nickname(nickname) == -1) {
-    zwarn("Nickname contains a a dot which is not recommended");
+    zwarn("Nickname contains a dot which is not recommended");
   } else if (validate_nickname(nickname) == 0) {
     zsucc("Nickname is valid");
   }
 
+  /* Free old values if they were dynamically allocated */
+  free(zircon_config.fullname);
+  free(zircon_config.username);
+  free(zircon_config.nickname);
+
+  /* Assign new values */
   zircon_config.fullname = name;
   zircon_config.username = username;
   zircon_config.nickname = nickname;
 
-  zinfo("Full name: %s", name);
-  zinfo("Username: %s", username);
-  zinfo("Nickname: %s", nickname);
+  zinfo("Full name: %s", zircon_config.fullname);
+  zinfo("Username: %s", zircon_config.username);
+  zinfo("Nickname: %s", zircon_config.nickname);
 
   return 0;
 }
 
-void
-free_config()
+void free_config()
 {
-  if (zircon_config.nickname) {
-    /*free(zircon_config.nickname);*/
-  }
-
-  if (zircon_config.username) {
-    free(zircon_config.username);
-  }
-
-  if (zircon_config.fullname) {
-    free(zircon_config.fullname);
-  }
+  zwarn("Free is empty because pointers are handled by the kvArray");
 }
 
 struct irc_server_info*

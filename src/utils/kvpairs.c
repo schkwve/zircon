@@ -14,7 +14,7 @@ read_key_value_file(const char* filename,
     /* If file doesnt exist create and populate it */
     file = fopen(filename, "w");
     if (file == NULL) {
-      zerr("Error creating file: \n");
+      zerr(1, "Error creating file: ");
       return -1;
     }
 
@@ -34,7 +34,7 @@ read_key_value_file(const char* filename,
     /* Reopen to read */
     file = fopen(filename, "r");
     if (file == NULL) {
-      zerr("Error reopening file: ");
+      zerr(1, "Error reopening file: ");
       return -1;
     }
   }

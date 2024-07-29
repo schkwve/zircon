@@ -41,7 +41,7 @@ zwarn(const char* fmt, ...)
 }
 
 void
-zerr(const char* fmt, ...)
+zerr(int perrno, const char* fmt, ...)
 {
   va_list args;
 
@@ -50,9 +50,12 @@ zerr(const char* fmt, ...)
   /* Init the va list */
   va_start(args, fmt);
 
+  if (perrno) {
+    perror(NULL);
+  }
+
   /* Use vprintf to print the valist */
   vprintf(fmt, args);
-  perror(NULL);
   printf("\n");
 
   /* Cleanup */

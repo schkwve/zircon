@@ -24,14 +24,14 @@ z_readlink(const char* path, char* buf, size_t bufsize)
   /* Open Symlink */
   fd = open(path, O_RDONLY | 00400000);
   if (fd == -1) {
-    zerr("couldnt open %s for readlink: ", path);
+    zerr(1, "couldnt open %s for readlink: ", path);
     return -1;
   }
 
   /* Read the target */
   len = read(fd, buf, bufsize - 1);
   if (len == -1) {
-    zerr("couldnt read %s for readlink: ", path);
+    zerr(1, "couldnt read %s for readlink: ", path);
     close(fd);
     return -1;
   }

@@ -16,7 +16,7 @@ zinfo(const char* fmt, ...);
 void
 zwarn(const char* fmt, ...);
 void
-zerr(const char* fmt, ...);
+zerr(int perrno, const char* fmt, ...);
 void
 zfatal(int err_code, const char* fmt, ...);
 void

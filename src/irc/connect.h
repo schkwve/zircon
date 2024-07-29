@@ -5,7 +5,7 @@
 #include <stdint.h>
 
 void
-irc_connect_to(const char* server_address, uint16_t server_port);
+irc_connect_to(const char* server_address, uint16_t server_port, const char* channel);
 void
 irc_disconnect();
 

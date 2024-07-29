@@ -14,7 +14,7 @@
 #include <utils/zerr.h>
 
 void
-irc_connect_to(const char* server_address, uint16_t server_port)
+irc_connect_to(const char* server_address, uint16_t server_port, const char* channel)
 {
   char* buffer = malloc(1024);
 
@@ -33,7 +33,7 @@ irc_connect_to(const char* server_address, uint16_t server_port)
   printf("%s\n", buffer);
   irc_recv(&buffer, 1024);
   printf("%s\n", buffer);
-  irc_send("JOIN #aurixos\r\n");
+  irc_join_channel(channel);
 
   /* TODO: check if we have a PING we can PONG to */
 }
@@ -49,7 +49,7 @@ irc_send(char* buffer)
 {
   size_t size = strlen(buffer);
   if (size < 1) {
-    zerr("The buffer cant be empty");
+    zerr(0, "The buffer cant be empty");
     return -1;
   }
 
@@ -65,7 +65,7 @@ int
 irc_recv(char** buffer, size_t size)
 {
   if (size < 1) {
-    zerr("Read size cant be 0!");
+    zerr(0, "Read size cant be 0!");
     return -1;
   }
 

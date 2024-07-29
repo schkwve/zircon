@@ -50,13 +50,13 @@ system_get_username(char** username, char** fullname)
   struct passwd* pwd = getpwuid(getuid());
 
   if (pwd == NULL) {
-    zerr("getpwuid returned NULL!");
+    zerr(0, "getpwuid returned NULL!");
     return 1;
   }
 
   char* name = get_real_name(pwd->pw_gecos);
   if (name == NULL) {
-    zerr("Failed to get real name");
+    zerr(0, "Failed to get real name");
     return 1;
   }
 

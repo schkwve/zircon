@@ -31,8 +31,8 @@ print_stacktrace()
 void
 sigint_handler()
 {
-  zerr("SIGINT caught: quitting!");
-  zerr("Backtrace: ");
+  zerr(0, "SIGINT caught: quitting!");
+  zerr(0, "Backtrace: ");
   print_stacktrace();
   exit(0);
 }
@@ -40,8 +40,8 @@ sigint_handler()
 void
 sigsegv_handler()
 {
-  zerr("SIGSEGV caught: quitting!");
-  zerr("Backtrace: ");
+  zerr(0, "SIGSEGV caught: quitting!");
+  zerr(0, "Backtrace: ");
   print_stacktrace();
   exit(0);
 }
@@ -49,8 +49,8 @@ sigsegv_handler()
 void
 sigabrt_handler()
 {
-  zerr("SIGABRT caught: quitting!");
-  zerr("Backtrace: ");
+  zerr(0, "SIGABRT caught: quitting!");
+  zerr(0, "Backtrace: ");
   print_stacktrace();
   exit(0);
 }

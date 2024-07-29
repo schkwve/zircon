@@ -68,7 +68,7 @@ send_data_to_server(const char* buffer)
   do {
     ret = write(server_info->sockfd, buffer, size - bytes_written);
     if (ret == -1) {
-      zerr("%lu bytes could not be written to the server: ",
+      zerr(1, "%lu bytes could not be written to the server: ",
            size - bytes_written);
       return bytes_written;
     }
