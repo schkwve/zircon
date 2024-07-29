@@ -6,7 +6,7 @@
 char *z_strdup(const char *src)
 {
 	size_t len = strlen(src);
-	char *ret = malloc(len * sizeof(char));
+	char *ret = malloc(len + sizeof(char));
 	memcpy(ret, src, len);
 	return ret;
 }
@@ -36,4 +36,14 @@ ssize_t z_readlink(const char *path, char *buf, size_t bufsize) {
     /* cleanup */
     close(fd);
     return len;
+}
+
+void z_strstrip(char *str, int num_chars) {
+    int len = strlen(str);
+
+    if (len >= num_chars) {
+        str[len - num_chars] = '\0';
+    } else {
+        str[0] = '\0'; 
+    }
 }

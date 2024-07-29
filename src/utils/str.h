@@ -15,5 +15,6 @@
 
 char *z_strdup(const char *src);
 ssize_t z_readlink(const char *path, char *buf, size_t bufsize);
+void z_strstrip(char *str, int chars_to_remove);
 
 #endif /* _UTILS_STR_H */

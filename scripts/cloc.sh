@@ -1,7 +1,9 @@
 #!/bin/bash
 
+# Used to count the lines of code in the src/ directory
+
 # Define the target directory (one level up from the scripts directory)
-target_dir="src/"
+target_dir="$PWD"
 
 # Check if the target directory exists
 if [ ! -d "$target_dir" ]; then

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Formats the code to the clang format type
+
 # Define the path to the .clang-format file
 config_file=".clang-format"
 

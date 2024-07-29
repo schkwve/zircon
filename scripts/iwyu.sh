@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# include what you need script
+
 # Define CFLAGS (this can be set or adjusted as needed)
 CFLAGS="-std=c89 -Wall -Wextra -Werror -O3 -Isrc -fno-strict-aliasing -fno-wrapv"
 

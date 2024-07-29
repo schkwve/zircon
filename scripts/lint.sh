@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This runs clang-tidy on all .c and .h files in the src directory
+
 # Define the path to the .clang-tidy file
 config_file=".clang-tidy"
 
