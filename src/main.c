@@ -35,14 +35,16 @@ int main(int argc, char **argv)
 
   /* everything must be loaded from here on */
 
+  /* assume we want to connect to localhost @ 6667 */
+  irc_connect_to(address, port);
+
   struct irc_capabilities *caps = malloc(sizeof(struct irc_capabilities));
 
   req_capabilities(caps);
   print_capabilities(caps);
 
   free(caps);
-  /* assume we want to connect to localhost @ 6667 */
-  irc_connect_to(address, port);
+
   irc_disconnect();
 
   zinfo("Disconnected from %s:%d", address, port);

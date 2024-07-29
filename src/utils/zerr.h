@@ -16,5 +16,7 @@ void zwarn(const char *fmt, ...);
 void zerr(const char *fmt, ...);
 void zfatal(int err_code, const char *fmt, ...);
 void zsucc(const char *fmt, ...);
+void zircmsg(const char *fmt, ...);
+void zircwarn(const char *fmt, ...);
 
 #endif /* _UTILS_ZERR_H */

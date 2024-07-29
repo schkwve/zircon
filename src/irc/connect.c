@@ -40,13 +40,14 @@ void irc_disconnect()
   close_server_connection();
 }
 
-int irc_send(const char *buffer)
+int irc_send(char buffer[])
 {
   size_t size = strlen(buffer);
   if (size < 1) {
     zerr("The buffer cant be empty");
     return -1;
   }
+  zircmsg("Send message %s to the server.", buffer);
 
   return send_data_to_server(buffer);
 }
@@ -66,6 +67,10 @@ int irc_recv(char **buffer, size_t size)
   }
 
   bzero(*buffer, size);
+  char **pbuf = buffer;
+  *pbuf = (strlen(*pbuf) > 1 && (*pbuf)[strlen(*pbuf) - 1] == '\n' && (*pbuf)[strlen(*pbuf) - 2] == '\r') ? ((*pbuf)[strlen(*pbuf) - 2] = '\0', *pbuf) : *pbuf; 
+  printf("\n");
+  zircmsg("Recived message '%s' from the server.", pbuf[0]);
 
   return recv_data_from_server(buffer, size);
 }

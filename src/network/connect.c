@@ -44,6 +44,7 @@ void connect_server(const char *server_address, uint16_t server_port)
   server_info->is_connected = true;
 }
 
+
 void close_server_connection(void)
 {
   struct irc_server_info *server_info = config_get_server_info();

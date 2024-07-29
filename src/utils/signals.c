@@ -33,30 +33,28 @@ void print_stacktrace() {
 
     if (symbols) {
         for (i = 1; i < frame_count; i++) {
-            printf("\t%s\n", symbols[i]);
+            printf("  %s\n", symbols[i]);
         }
         free(symbols);
     }
-} 
-
-void common_exit() {
-    irc_disconnect();
-    zsucc("Freed memory and disconnected from server");
 }
-
-
 
 void sigint_handler() {
     zerr("SIGINT caught: quitting!");
-    common_exit();
     zerr("Backtrace: ");
     print_stacktrace();
     exit(0);
 }
 
 void sigsegv_handler() {
-    zerr("SIGSEV caught: quitting!");
-    common_exit();
+    zerr("SIGSEGV caught: quitting!");
+    zerr("Backtrace: ");
+    print_stacktrace();
+    exit(0);
+}
+
+void sigabrt_handler() {
+    zerr("SIGABRT caught: quitting!");
     zerr("Backtrace: ");
     print_stacktrace();
     exit(0);
@@ -65,4 +63,5 @@ void sigsegv_handler() {
 void register_handlers() {
     signal(SIGINT, sigint_handler);
     signal(SIGSEGV, sigsegv_handler);
+    signal(SIGABRT, sigabrt_handler);
 }

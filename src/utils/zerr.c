@@ -89,3 +89,35 @@ void zsucc(const char *fmt, ...) {
     /* Cleanup */
     va_end(args);
 }
+
+void zircmsg(const char *fmt, ...) {
+    va_list args;
+
+    printf("%s%s[IRC]:%s ", ZERR_COLOR_MAGENTA, ZERR_STYLE_BOLD, ZERR_COLOR_RESET);
+
+    /* Init the va list */
+    va_start(args, fmt);
+
+    /* Use vprintf to print the valist */
+    vprintf(fmt, args);
+    printf("\n");
+
+    /* Cleanup */
+    va_end(args);
+}
+
+void zircwarn(const char *fmt, ...) {
+    va_list args;
+
+    printf("%s%s[IRC-WARN]:%s ", ZERR_COLOR_CYAN, ZERR_STYLE_BOLD, ZERR_COLOR_RESET);
+
+    /* Init the va list */
+    va_start(args, fmt);
+
+    /* Use vprintf to print the valist */
+    vprintf(fmt, args);
+    printf("\n");
+
+    /* Cleanup */
+    va_end(args);
+}
