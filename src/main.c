@@ -18,7 +18,7 @@ int main(int argc, char **argv)
   atexit(die);
 
   /* chat.freenode.net */
-  const char *address = "207.148.28.126";
+  const char *address = "94.125.182.252";
   const int port = 6667;
 
   zinfo("Connecting to %s:%d", address, port);

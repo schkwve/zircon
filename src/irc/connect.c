@@ -54,10 +54,18 @@ int irc_send(const char *buffer)
 int irc_recv(char **buffer, size_t size)
 {
   if (size < 1) {
-    zerr("The read size cant be 0!");
+    zerr("Read size cant be 0!");
     return -1;
   }
 
-  bzero(*buffer, size); /* I dont know why this segfaults tbh when i use gdb and backtrace it goes right back here */
+  /* Alloc memory for the buffer so that it *hopefully* doesnt segfault */
+  *buffer = (char *)malloc(size);
+  if (*buffer == NULL) {
+    zfatal(-281, "Could not allocate buffer to recv from the server:");
+    return -1;
+  }
+
+  bzero(*buffer, size);
+
   return recv_data_from_server(buffer, size);
 }
