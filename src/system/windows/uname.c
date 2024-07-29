@@ -1,17 +1,17 @@
 #include <Windows.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
-
 #include <system/uname.h>
+#include <unistd.h>
 #include <utils/str.h>
-#include <zircon.h>
 #include <utils/zerr.h>
+#include <zircon.h>
 
 #define MAX_USERNAME_LEN 32
 #define MAX_FULLNAME_LEN 64
 
-int system_get_username(char **username, char **fullname)
+int
+system_get_username(char** username, char** fullname)
 {
   /* this prevents gcc complaining about */
   /* these parameters being set but not used */
@@ -21,8 +21,8 @@ int system_get_username(char **username, char **fullname)
   int username_len = MAX_USERNAME_LEN;
   int fullname_len = MAX_FULLNAME_LEN;
 
-  char *username_tmp = (char *)malloc(username_len);
-  char *fullname_tmp = (char *)malloc(fullname_len);
+  char* username_tmp = (char*)malloc(username_len);
+  char* fullname_tmp = (char*)malloc(fullname_len);
 
   /* *username = GetUserNameA() */
   if (!GetUserNameA(username_tmp, &username_len)) {
@@ -33,7 +33,8 @@ int system_get_username(char **username, char **fullname)
         free(username_tmp);
         free(fullname_tmp);
 
-        zerror("GetUserNameA() failed with the following error code: %x\n", GetLastError());
+        zerror("GetUserNameA() failed with the following error code: %x\n",
+               GetLastError());
 
         return 1;
       }
@@ -41,7 +42,8 @@ int system_get_username(char **username, char **fullname)
       free(username_tmp);
       free(fullname_tmp);
 
-      zerror("GetUserNameA() failed with the following error code: %x\n", GetLastError());
+      zerror("GetUserNameA() failed with the following error code: %x\n",
+             GetLastError());
       return 1;
     }
   }
@@ -52,7 +54,8 @@ int system_get_username(char **username, char **fullname)
       fullname_tmp = realloc(fullname_len);
       if (!GetUserNameExA(NameDisplay, fullname_tmp, &fullname_len)) {
         /* if we still error out, just use the default */
-        zerror("GetUserNameExA() failed with the following error code: %x\n", GetLastError());
+        zerror("GetUserNameExA() failed with the following error code: %x\n",
+               GetLastError());
         zinfo("Using default real name...\n");
         fullname_tmp = realloc(strlen(FULLNAME_DEFAULT));
         strcpy(fullname_tmp, FULLNAME_DEFAULT);
@@ -61,7 +64,8 @@ int system_get_username(char **username, char **fullname)
       free(username_tmp);
       free(fullname_tmp);
 
-      zerror("GetUserNameExA() failed with the following error code: %x\n", GetLastError());
+      zerror("GetUserNameExA() failed with the following error code: %x\n",
+             GetLastError());
       zinfo("Using default real name...\n");
       fullname_tmp = realloc(strlen(FULLNAME_DEFAULT));
       strcpy(fullname_tmp, FULLNAME_DEFAULT);

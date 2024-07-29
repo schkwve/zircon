@@ -1,7 +1,7 @@
 CC ?= gcc
 LD ?= ld
 
-CFLAGS ?=  -std=c89 -Wall -Wextra -Werror -Isrc -fno-strict-aliasing -fno-wrapv -g3 -O0 -rdynamic -g 
+CFLAGS ?= -std=c89 -Wall -Wextra -Werror -Isrc -fno-strict-aliasing -fno-wrapv -g3 -O0 #-rdynamic -g
 LDFLAGS ?=
 
 BIN_DIR := bin
@@ -42,7 +42,6 @@ install: $(TARGET)
 	@install -m 755 $(TARGET) $(DESTDIR)
 
 .PHONY: run-scripts
-
 run-scripts:
 	@echo "Making all scripts executable..."
 	@chmod +x scripts/*.sh
@@ -57,6 +56,20 @@ run-scripts:
 	@clear
 	@echo "Executing scripts/cloc.sh..."
 	@scripts/cloc.sh
+
+.PHONY: format
+format:
+	@clang-format -i $(shell find src -name "*.c" -o -name "*.h")
+
+.PHONY: lint
+lint:
+	@clang-tidy $(shell find src -name "*.c" -o -name "*.h") -- $(CFLAGS)
+
+.PHONY: iwyu
+iwyu:
+	@for file in $(shell find src -name "*.c"); do \
+		include-what-you-use $(CFLAGS) $$file; \
+	done
 
 .PHONY: clean
 clean:

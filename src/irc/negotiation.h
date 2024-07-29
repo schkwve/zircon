@@ -5,16 +5,16 @@
 /* 10 most common capabilities for an IRC server */
 struct irc_capabilities
 {
-	int multiPrefix;
-	int sasl;
-	int accountNotify;
-	int awayNotify;
-	int extendedJoin;
-	int chghost;
-	int userhostInNames;
-	int inviteNotify;
-	int labeledResponse;
-	int messageTags;
+  int multiPrefix;
+  int sasl;
+  int accountNotify;
+  int awayNotify;
+  int extendedJoin;
+  int chghost;
+  int userhostInNames;
+  int inviteNotify;
+  int labeledResponse;
+  int messageTags;
 };
 
 void
