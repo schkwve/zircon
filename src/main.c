@@ -5,20 +5,28 @@
 #include <utils/kvpairs.h>
 #include <utils/str.h>      
 #include <irc/negotiation.h>
+#include <utils/signals.h>
+
+static int exit_code = 0;
 
 void die(void);
 
 int main(int argc, char **argv)
 {
-  
 
   UNUSED(argc);
   UNUSED(argv);
+  UNUSED(exit_code);
 
-  atexit(die);
+  register_handlers();
+
+  if (atexit(die) != 0) {
+    zerr("Failed to register exit handler");
+    return 1;
+  }
 
   /* chat.freenode.net */
-  const char *address = "94.125.182.252";
+  const char *address = "207.148.28.126";
   const int port = 6667;
 
   zinfo("Connecting to %s:%d", address, port);
@@ -46,7 +54,8 @@ int main(int argc, char **argv)
 void die(void)
 {
   irc_disconnect();
+  
   free_config();
 
-  zinfo("Exited");
+  zsucc("Freed memory and disconnected from server");
 }

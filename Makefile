@@ -1,7 +1,7 @@
 CC ?= gcc
 LD ?= ld
 
-CFLAGS ?= -std=c89 -Wall -Wextra -Werror  -Isrc -fno-strict-aliasing -fno-wrapv -g3 
+CFLAGS ?=  -std=c89 -Wall -Wextra -Werror -Isrc -fno-strict-aliasing -fno-wrapv -g3 -O0 -rdynamic -g 
 LDFLAGS ?=
 
 #0x00007ffff7f04050
