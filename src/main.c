@@ -3,12 +3,15 @@
 #include <utils/zerr.h>
 #include <zircon.h>
 #include <utils/kvpairs.h>
-#include <utils/str.h>
+#include <utils/str.h>      
+#include <irc/negotiation.h>
 
 void die(void);
 
 int main(int argc, char **argv)
 {
+  
+
   UNUSED(argc);
   UNUSED(argv);
 
@@ -22,6 +25,14 @@ int main(int argc, char **argv)
 
   load_config();
 
+  /* everything must be loaded from here on */
+
+  struct irc_capabilities *caps = malloc(sizeof(struct irc_capabilities));
+
+  req_capabilities(caps);
+  print_capabilities(caps);
+
+  free(caps);
   /* assume we want to connect to localhost @ 6667 */
   irc_connect_to(address, port);
   irc_disconnect();

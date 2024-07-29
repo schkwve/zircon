@@ -1,8 +1,10 @@
 CC ?= gcc
 LD ?= ld
 
-CFLAGS ?= -std=c89 -Wall -Wextra -Werror -O3 -Isrc -fno-strict-aliasing -fno-wrapv
+CFLAGS ?= -std=c89 -Wall -Wextra -Werror  -Isrc -fno-strict-aliasing -fno-wrapv -g3 
 LDFLAGS ?=
+
+#0x00007ffff7f04050
 
 BIN_DIR := bin
 OBJ_DIR := build

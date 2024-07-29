@@ -12,8 +12,8 @@
 
 /* Struct to hold a key-value pair */
 typedef struct {
-    char key[MAX_KEY_LEN];
-    char value[MAX_VALUE_LEN];
+    char key[513];
+    char value[513];
 } KeyValuePair;
 
 /* Struct to hold an array of key-value pairs */

@@ -58,6 +58,6 @@ int irc_recv(char **buffer, size_t size)
     return -1;
   }
 
-  bzero(*buffer, sizeof(buffer));
+  bzero(*buffer, size); /* I dont know why this segfaults tbh when i use gdb and backtrace it goes right back here */
   return recv_data_from_server(buffer, size);
 }

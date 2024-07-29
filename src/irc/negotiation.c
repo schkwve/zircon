@@ -1,0 +1,76 @@
+#include <irc/negotiation.h>
+#include <irc/commands.h>
+#include <irc/connect.h>
+#include <stdlib.h>
+#include <string.h>
+#include <utils/zerr.h>
+#include <stdio.h>
+
+void req_capabilities(struct irc_capabilities *caps) {
+    char *buffer = NULL;
+    size_t buffer_size = BUFFER_SIZE;
+    int ret;
+
+    irc_capls(302);  
+    
+    ret = irc_recv(&buffer, buffer_size);
+    if (ret <= 0) {
+        zerr("Error receiving capabilities list: ");
+        free(buffer);
+        return;
+    }
+
+    char *cap_start = strstr(buffer, "CAP * LS :");
+    if (cap_start) {
+        cap_start += strlen("CAP * LS :");
+        char *cap_end = strstr(cap_start, "\r\n");
+        if (cap_end) {
+            *cap_end = '\0';  
+            char *cap = strtok(cap_start, " ");
+            while (cap) {
+                if (strcmp(cap, "multi-prefix") == 0) {
+                    caps->multiPrefix = 1;
+                } else if (strcmp(cap, "sasl") == 0) {
+                    caps->sasl = 1;
+                } else if (strcmp(cap, "account-notify") == 0) {
+                    caps->accountNotify = 1;
+                } else if (strcmp(cap, "away-notify") == 0) {
+                    caps->awayNotify = 1;
+                } else if (strcmp(cap, "extended-join") == 0) {
+                    caps->extendedJoin = 1;
+                } else if (strcmp(cap, "chghost") == 0) {
+                    caps->chghost = 1;
+                } else if (strcmp(cap, "userhost-in-names") == 0) {
+                    caps->userhostInNames = 1;
+                } else if (strcmp(cap, "invite-notify") == 0) {
+                    caps->inviteNotify = 1;
+                } else if (strcmp(cap, "message-tags") == 0) {
+                    caps->messageTags = 1;
+                } else if (strcmp(cap, "labeled-response") == 0) {
+                    caps->labeledResponse = 1;
+                }
+                cap = strtok(NULL, " ");
+            }
+        }
+    }
+    free(buffer);
+    
+    char cap_req[256];
+    sprintf(cap_req, "multi-prefix sasl account-notify away-notify extended-join chghost userhost-in-names invite-notify message-tags labeled-response");
+    irc_capreq(cap_req);
+
+    irc_capend();
+}
+
+void print_capabilities(const struct irc_capabilities *caps) {
+    zinfo("IRC Capabilities:\n");
+    zinfo("  Multi Prefix: %s\n", caps->multiPrefix ? "Supported" : "Not Supported");
+    zinfo("  SASL: %s\n", caps->sasl ? "Supported" : "Not Supported");
+    zinfo("  Account Notify: %s\n", caps->accountNotify ? "Supported" : "Not Supported");
+    zinfo("  Away Notify: %s\n", caps->awayNotify ? "Supported" : "Not Supported");
+    zinfo("  Extended Join: %s\n", caps->extendedJoin ? "Supported" : "Not Supported");
+    zinfo("  Chghost: %s\n", caps->chghost ? "Supported" : "Not Supported");
+    zinfo("  Userhost In Names: %s\n", caps->userhostInNames ? "Supported" : "Not Supported");
+    zinfo("  Invite Notify: %s\n", caps->inviteNotify ? "Supported" : "Not Supported");
+    zinfo("  Labeled Response: %s\n", caps->labeledResponse ? "Supported" : "Not Supported");
+}
