@@ -59,7 +59,6 @@ irc_capreq(const char* capabilities)
 void
 irc_capend(void)
 {
-<<<<<<< HEAD
 	irc_send("CAP END\r\n");
 }
 
@@ -77,7 +76,4 @@ irc_join_channel(const char *channel_name) {
 	char *command = NULL;
 	sprintf(command, "JOIN %s\r\n", channel_name);
 	irc_send(command);
-=======
-  irc_send("CAP END\r\n");
->>>>>>> main
 }
