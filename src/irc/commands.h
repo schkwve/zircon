@@ -23,5 +23,9 @@ void
 irc_capreq(const char* capabilities);
 void
 irc_capend(void);
+void
+irc_join_channel(const char* channel);
+int
+irc_recv(char** buffer, size_t size);
 
 #endif /* _IRC_COMMANDS_H */

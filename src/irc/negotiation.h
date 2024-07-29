@@ -18,7 +18,7 @@ struct irc_capabilities
 };
 
 void
-ls_capabilities(struct irc_capabilities* caps);
+ls_capabilities();
 void
 print_capabilities(const struct irc_capabilities* caps);
 

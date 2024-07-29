@@ -15,12 +15,27 @@
 void
 irc_connect_to(const char* server_address, uint16_t server_port)
 {
+	char *buffer = malloc(1024);
+
 	connect_server(server_address, server_port);
 
-	struct irc_capabilities* caps = malloc(sizeof(struct irc_capabilities));
+	irc_send("NICK zircon12345\r\n");
+	irc_send("USER zircon 0 * :Zircon IRC Client\r\n");
+	irc_recv(&buffer, 1024);
+	printf("Received: %s\n", buffer);
+	irc_recv(&buffer, 1024);
+	printf("Received: %s\n", buffer);
+	irc_recv(&buffer, 1024);
+	printf("Received: %s\n", buffer);
+	irc_recv(&buffer, 1024);
+	printf("Received: %s\n", buffer);
+	irc_recv(&buffer, 1024);
+	printf("Received: %s\n", buffer);
+	irc_send("JOIN #aurixos\r\n");
+	irc_recv(&buffer, 1024);
+	printf("Received: %s\n", buffer);
 
-	ls_capabilities(caps);
-	print_capabilities(caps);
+	
 
 	/* TODO: check if we have a PING we can PONG to */
 }
@@ -64,9 +79,7 @@ irc_recv(char** buffer, size_t size)
 	}
 
 	bzero(*buffer, size);
-	char* pbuf = z_strdup(*buffer);
-	z_strstrip(pbuf, 2);
-	zircmsg("Recived message '%s' from the server.", pbuf);
 
 	return recv_data_from_server(buffer, size);
 }
+

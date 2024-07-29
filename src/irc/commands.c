@@ -62,3 +62,19 @@ irc_capend(void)
 {
 	irc_send("CAP END\r\n");
 }
+
+void 
+irc_join_channel(const char *channel_name) {
+	if (strlen(channel_name) < 2) {
+		zerr("%s must be atlesat 2 characters", channel_name);
+		return;
+	}
+
+	if (channel_name[0] != '#' || channel_name[0] != '&') {
+		zerr("%s is not a channel name", channel_name);
+	}
+
+	char *command = NULL;
+	sprintf(command, "JOIN %s\r\n", channel_name);
+	irc_send(command);
+}
