@@ -51,8 +51,8 @@ int read_key_value_file(const char *filename, KeyValueArray *kvArray,const struc
             }
 
             /* Copy everything */
-            strncpy(kvArray->pairs[kvArray->count].key, key, 513);
-            strncpy(kvArray->pairs[kvArray->count].value, value, 513);
+            strncpy(kvArray->pairs[kvArray->count].key, key, MAX_KEY_LEN);
+            strncpy(kvArray->pairs[kvArray->count].value, value, MAX_VALUE_LEN);
             kvArray->pairs[kvArray->count].key[MAX_KEY_LEN - 1] = '\0';
             kvArray->pairs[kvArray->count].value[MAX_VALUE_LEN - 1] = '\0';
             kvArray->count++;
