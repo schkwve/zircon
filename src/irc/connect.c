@@ -1,9 +1,12 @@
 
+#include <config.h>
+#include <irc/commands.h>
 #include <irc/connect.h>
 #include <irc/negotiation.h>
 #include <network/connect.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
@@ -13,24 +16,25 @@
 void
 irc_connect_to(const char* server_address, uint16_t server_port)
 {
-	char *buffer = malloc(1024);
+  char* buffer = malloc(1024);
 
-  	connect_server(server_address, server_port);
-	irc_send("NICK zircon12345\r\n");
-	irc_send("USER zircon 0 * :Zircon IRC Client\r\n");
-	irc_recv(&buffer, 1024);
-	printf("Received: %s\n", buffer);
-	irc_recv(&buffer, 1024);
-	printf("Received: %s\n", buffer);
-	irc_recv(&buffer, 1024);
-	printf("Received: %s\n", buffer);
-	irc_recv(&buffer, 1024);
-	printf("Received: %s\n", buffer);
-	irc_recv(&buffer, 1024);
-	printf("Received: %s\n", buffer);
-	irc_send("JOIN #aurixos\r\n");
-	irc_recv(&buffer, 1024);
-	printf("Received: %s\n", buffer);
+  connect_server(server_address, server_port);
+  irc_nick(config_get_nickname());
+  irc_user(config_get_username(), config_get_fullname());
+  irc_recv(&buffer, 1024);
+  printf("%s\n", buffer);
+  irc_recv(&buffer, 1024);
+  printf("%s\n", buffer);
+  irc_recv(&buffer, 1024);
+  printf("%s\n", buffer);
+  irc_recv(&buffer, 1024);
+  printf("%s\n", buffer);
+  irc_recv(&buffer, 1024);
+  printf("%s\n", buffer);
+  irc_recv(&buffer, 1024);
+  printf("%s\n", buffer);
+  irc_send("JOIN #aurixos\r\n");
+
   /* TODO: check if we have a PING we can PONG to */
 }
 
@@ -72,8 +76,7 @@ irc_recv(char** buffer, size_t size)
     return -1;
   }
 
-	bzero(*buffer, size);
+  bzero(*buffer, size);
 
-	return recv_data_from_server(buffer, size);
+  return recv_data_from_server(buffer, size);
 }
-

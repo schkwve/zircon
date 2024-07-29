@@ -1,11 +1,11 @@
 #include <config.h>
 #include <irc/connect.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <utils/signals.h>
 #include <utils/zerr.h>
 #include <zircon.h>
-
-static int exit_code = 0;
 
 void
 die(void);
@@ -16,7 +16,6 @@ main(int argc, char** argv)
 
   UNUSED(argc);
   UNUSED(argv);
-  UNUSED(exit_code);
 
   register_handlers();
 
@@ -38,6 +37,13 @@ main(int argc, char** argv)
   /* assume we want to connect to localhost @ 6667 */
   irc_connect_to(address, port);
 
+  while (1) {
+    char* buffer = malloc(1024);
+    scanf("%s", buffer);
+    if (strstr(buffer, "exit") != NULL) {
+      break;
+    }
+  }
   irc_disconnect();
 
   zinfo("Disconnected from %s:%d", address, port);

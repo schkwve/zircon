@@ -41,6 +41,10 @@ load_config()
     zsucc("Nickname is valid");
   }
 
+  zircon_config.fullname = name;
+  zircon_config.username = username;
+  zircon_config.nickname = nickname;
+
   zinfo("Full name: %s", name);
   zinfo("Username: %s", username);
   zinfo("Nickname: %s", nickname);
@@ -52,7 +56,7 @@ void
 free_config()
 {
   if (zircon_config.nickname) {
-    free(zircon_config.nickname);
+    /*free(zircon_config.nickname);*/
   }
 
   if (zircon_config.username) {
