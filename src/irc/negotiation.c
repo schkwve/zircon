@@ -62,7 +62,13 @@ ls_capabilities(struct irc_capabilities* caps)
 		"multi-prefix sasl account-notify away-notify extended-join chghost "
 		"userhost-in-names invite-notify message-tags labeled-response";
 
+	char *req_buffer = malloc(BUFFER_SIZE);
+
 	irc_capreq(cap_req);
+	irc_capreq(cap_req);
+	irc_recv(&req_buffer, buffer_size);
+	zinfo("Buffer: %s", req_buffer);
+	free(req_buffer);
 
 	irc_capend();
 }

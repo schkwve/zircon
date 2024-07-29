@@ -15,7 +15,6 @@
 void
 irc_connect_to(const char* server_address, uint16_t server_port)
 {
-
 	connect_server(server_address, server_port);
 
 	struct irc_capabilities* caps = malloc(sizeof(struct irc_capabilities));
