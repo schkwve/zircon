@@ -27,5 +27,7 @@ void
 irc_capend(void);
 void
 irc_join_channel(const char* channel);
+void
+irc_send_msg(const char* target, const char* message);
 
 #endif /* _IRC_COMMANDS_H */

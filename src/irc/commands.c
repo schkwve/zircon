@@ -70,3 +70,10 @@ irc_join_channel(const char* channel_name)
   sprintf(command, "JOIN %s\r\n", channel_name); /* TODO: fix sigsegv */
   irc_send(command);
 }
+
+void irc_send_msg(const char* target, const char* message)
+{
+  char* command = malloc(64 * sizeof(char));
+  sprintf(command, "PRIVMSG %s :%s\r\n", target, message);
+  irc_send(command);
+}
